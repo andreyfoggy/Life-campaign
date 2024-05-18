@@ -45,6 +45,7 @@ import MainPage from './pages/main.page';
 import CampaignPage from './pages/campagin/campaign.page';
 import Mission from './pages/campagin/mission';
 import Objective from './pages/campagin/objective';
+import LoginPage from './pages/login.page';
 
 setupIonicReact();
 
@@ -52,11 +53,12 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+        <Route exact path="/login" component={LoginPage} />
         <Route exact path="/main" component={MainPage} />
         <Route exact path="/campaign" component={CampaignPage} />
         <Route exact path="/campaign/mission" component={Mission} />
         <Route exact path="/campaign/mission/objective" component={Objective} />
-        <Redirect exact from="/" to="/main" />
+        <Redirect exact from="/" to="/login" />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
