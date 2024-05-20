@@ -40,11 +40,11 @@ import '@ionic/react/css/display.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import './theme/variables.css';
+import './theme/variables.scss';
 import MainPage from './pages/main.page';
 import CampaignPage from './pages/campagin/campaign.page';
-import Mission from './pages/campagin/mission';
-import Objective from './pages/campagin/objective';
+import Mission from './pages/campagin/mission/mission';
+import Objective from './pages/campagin/objective/objective';
 import LoginPage from './pages/login.page';
 
 setupIonicReact();

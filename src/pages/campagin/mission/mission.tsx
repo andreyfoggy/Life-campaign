@@ -2,6 +2,8 @@ import React from 'react';
 import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
 import { useHistory } from 'react-router';
 
+import './mission.scss';
+
 const Mission: React.FC = () => {
   const history = useHistory();
 
