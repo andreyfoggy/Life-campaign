@@ -23,6 +23,7 @@ const ObjectiveComponent: React.FC = () => {
   const [feedback, setFeedback] = useState('');
   const [vibe, setVibe] = useState(Vibe.Happy);
   const [playerHistory, setPlayerHistory] = useState<PlayerHistory | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     fetchPlayerHistory();
@@ -42,6 +43,7 @@ const ObjectiveComponent: React.FC = () => {
         setFeedback(history.feedback);
         setVibe(history.vibe);
         handleRating(history.vibe);
+        setSubmitted(true);
       }
     } catch (error) {
       console.error('Error fetching player history:', error);
@@ -66,6 +68,7 @@ const ObjectiveComponent: React.FC = () => {
       };
 
       await saveFeedback(feedbackData);
+      setSubmitted(true);
     } catch (error) {
       console.error('Error saving feedback:', error);
       // Show an error message to the user
@@ -142,7 +145,7 @@ const ObjectiveComponent: React.FC = () => {
           </IonCardContent>
         </IonCard>
   
-        {feedback && vibe !== undefined && (
+        {submitted && feedback && vibe !== undefined && (
           <IonCard color="success">
             <IonCardHeader>
               <IonCardTitle>Objective Complete!</IonCardTitle>
