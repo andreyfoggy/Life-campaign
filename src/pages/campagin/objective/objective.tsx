@@ -36,7 +36,7 @@ const ObjectiveComponent: React.FC = () => {
         (item: PlayerHistory) => item.objectiveId === objective.id
         console.log(objective)
       const history = response.data.find(
-        (item: PlayerHistory) => item.objectiveId === objective.id
+        (item: PlayerHistory) => item.objectiveId === objective.id && item.feedback
       );
       if (history) {
         setPlayerHistory(history);
