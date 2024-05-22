@@ -1,12 +1,28 @@
-import React from 'react';
-import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
+import { getAllCampaigns } from './../api';
+import { Campaign } from '../models';
 
 const MainPage: React.FC = () => {
   const history = useHistory();
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
 
-  const handleCampaignClick = () => {
-    history.push('/campaign');
+  useEffect(() => {
+    fetchCampaigns();
+  }, []);
+
+  const fetchCampaigns = async () => {
+    try {
+      const response = await getAllCampaigns();
+      setCampaigns(response.data);
+    } catch (error) {
+      console.error('Error fetching campaigns:', error);
+    }
+  };
+
+  const handleCampaignClick = (campaign: Campaign) => {
+    history.push(`/campaign/${campaign.id}`, { campaign });
   };
 
   return (
@@ -18,24 +34,14 @@ const MainPage: React.FC = () => {
       </IonHeader>
       <IonContent>
         <div className="ion-text-center ion-padding">
-          <IonCard color='primary' onClick={handleCampaignClick}>
-            <IonCardHeader>
-              <IonCardTitle>Find Friends</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              The jorney to a solid social circle.
-            </IonCardContent>
-          </IonCard>
-        </div>
-        <div className="ion-text-center ion-padding">
-          <IonCard color='medium' >
-            <IonCardHeader>
-              <IonCardTitle>Lead mafia family</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              Become a succesfull mafia leader with a perfect life-work balance 😎
-            </IonCardContent>
-          </IonCard>
+          {campaigns.map((campaign) => (
+            <IonCard key={campaign.id} color="primary" onClick={() => handleCampaignClick(campaign)}>
+              <IonCardHeader>
+                <IonCardTitle>{campaign.title}</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>{campaign.description}</IonCardContent>
+            </IonCard>
+          ))}
         </div>
       </IonContent>
     </IonPage>

@@ -43,25 +43,25 @@ import '@ionic/react/css/palettes/dark.system.css';
 import './theme/variables.scss';
 import MainPage from './pages/main.page';
 import CampaignPage from './pages/campagin/campaign.page';
-import Mission from './pages/campagin/mission/mission';
-import Objective from './pages/campagin/objective/objective';
 import LoginPage from './pages/login.page';
+import ObjectiveComponent from './pages/campagin/objective/objective';
+import MissionComponent from './pages/campagin/mission/mission';
 
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/main" component={MainPage} />
-        <Route exact path="/campaign" component={CampaignPage} />
-        <Route exact path="/campaign/mission" component={Mission} />
-        <Route exact path="/campaign/mission/objective" component={Objective} />
-        <Redirect exact from="/" to="/login" />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+<IonApp>
+  <IonReactRouter>
+    <IonRouterOutlet>
+      <Route exact path="/login" component={LoginPage} />
+      <Route exact path="/main" component={MainPage} />
+      <Route exact path="/campaign/:id" component={CampaignPage} />
+      <Route exact path="/campaign/:id/mission/:missionId" component={MissionComponent} />
+      <Route exact path="/campaign/:id/mission/:missionId/objective/:objectiveId" component={ObjectiveComponent} />
+      <Redirect exact from="/" to="/login" />
+    </IonRouterOutlet>
+  </IonReactRouter>
+</IonApp>
 );
 
 export default App;

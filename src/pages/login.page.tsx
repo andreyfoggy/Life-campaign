@@ -34,7 +34,7 @@ const history = useHistory();
         </IonToolbar>
       </IonHeader> */}
       <IonContent>
-        <IonList>
+        {/* <IonList>
           <IonItem>
             <IonLabel position="floating">Username</IonLabel>
             <IonInput
@@ -50,7 +50,7 @@ const history = useHistory();
               onIonChange={(e) => setPassword(e.detail.value!)}
             ></IonInput>
           </IonItem>
-        </IonList>
+        </IonList> */}
         <IonButton expand="block" onClick={handleLogin}>
           Login
         </IonButton>

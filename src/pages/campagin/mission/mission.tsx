@@ -1,14 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IonContent, IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonItem, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
-import { useHistory } from 'react-router';
-
+import { useHistory, useLocation, useParams } from 'react-router';
+import { getMissionById, getObjectivesByMissionId } from '../../../api';
 import './mission.scss';
+import { Mission, Objective } from '../../../models';
 
-const Mission: React.FC = () => {
+const MissionComponent: React.FC = () => {
   const history = useHistory();
+  const { id, missionId } = useParams<{ id: string; missionId: string }>();
 
-  const handleCampaignClick = () => {
-    history.push('/campaign/mission/objective');
+  const location = useLocation<{ mission: Mission }>();
+  const [mission, setMission] = useState<Mission | null>(null);
+  const [objectives, setObjectives] = useState<Objective[]>([]);
+
+  useEffect(() => {
+    const missionFromLocation = location.state?.mission;
+    if (missionFromLocation) {
+      setMission(missionFromLocation);
+    } else {
+      fetchMission();
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchObjectives();
+  }, []);
+
+  const fetchMission = async () => {
+    try {
+      const response = await getMissionById(missionId);
+      setMission(response.data);
+    } catch (error) {
+      console.error('Error fetching mission:', error);
+    }
+  };
+
+  const fetchObjectives = async () => {
+    try {
+      const response = await getObjectivesByMissionId(missionId);
+      setObjectives(response.data);
+    } catch (error) {
+      console.error('Error fetching objectives:', error);
+    }
+  };
+
+  const handleObjectiveClick = (objective: Objective) => {
+    history.push(`/campaign/${id}/mission/${missionId}/objective/${objective.id}`, { objective });
   };
 
   return (
@@ -16,38 +53,28 @@ const Mission: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/campaign" />
+            <IonBackButton defaultHref={`/campaign/${id}`} />
           </IonButtons>
-          <IonTitle>Make a friend in a public place</IonTitle>
+          <IonTitle>{mission?.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-      <IonItem>
-        <IonLabel>Don't be afraid, future missions are much scarier 😅</IonLabel>
-      </IonItem>
-      <div className="ion-text-center ion-padding">
-          <IonCard color='success' onClick={handleCampaignClick}>
-            <IonCardHeader>
-              <IonCardTitle color='light'>Do some basic preps</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent color='light'>
-              Clothing, shower, snacks
-            </IonCardContent>
-          </IonCard>
-      </div>
-      <div className="ion-text-center ion-padding">
-          <IonCard color='primary' onClick={handleCampaignClick}>
-            <IonCardHeader>
-              <IonCardTitle>Whatever next step</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>
-              whatever description
-            </IonCardContent>
-          </IonCard>
-        </div>
+        <IonItem>
+          <IonLabel>{mission?.description}</IonLabel>
+        </IonItem>
+        {objectives.map((objective) => (
+          <div key={objective.id} className="ion-text-center ion-padding">
+            <IonCard color={objective.id === '1' ? 'success' : 'primary'} onClick={() => handleObjectiveClick(objective)}>
+              <IonCardHeader>
+                <IonCardTitle color={objective.id === '1' ? 'light' : undefined}>{objective.title}</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent color={objective.id === '1' ? 'light' : undefined}>{objective.description}</IonCardContent>
+            </IonCard>
+          </div>
+        ))}
       </IonContent>
     </IonPage>
   );
 };
 
-export default Mission;
+export default MissionComponent;
