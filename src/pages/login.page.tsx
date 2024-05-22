@@ -33,27 +33,12 @@ const history = useHistory();
           <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader> */}
-      <IonContent>
-        {/* <IonList>
-          <IonItem>
-            <IonLabel position="floating">Username</IonLabel>
-            <IonInput
-              value={username}
-              onIonChange={(e) => setUsername(e.detail.value!)}
-            ></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel position="floating">Password</IonLabel>
-            <IonInput
-              type="password"
-              value={password}
-              onIonChange={(e) => setPassword(e.detail.value!)}
-            ></IonInput>
-          </IonItem>
-        </IonList> */}
-        <IonButton expand="block" onClick={handleLogin}>
-          Login
-        </IonButton>
+      <IonContent className="ion-text-center">
+        <div className="login-container">
+          <IonButton expand="block" onClick={handleLogin} size="large">
+            Login
+          </IonButton>
+        </div>
       </IonContent>
     </IonPage>
   );

@@ -57,20 +57,31 @@ const CampaignPage: React.FC = () => {
           <IonTitle>{campaign?.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <IonItem>
-          <IonLabel>{campaign?.description}</IonLabel>
-        </IonItem>
-        <div className="ion-text-center ion-padding">
-          {missions?.map((mission) => (
-            <IonCard key={mission.id} color="primary" onClick={() => handleMissionClick(mission)}>
-              <IonCardHeader>
-                <IonCardTitle>{mission.title}</IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>{mission.description}</IonCardContent>
-            </IonCard>
-          ))}
-        </div>
+      <IonContent className="ion-padding">
+        <IonCard  class="no-shadow">
+          <IonCardHeader>
+            <IonCardTitle>{campaign?.title}</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <p>{campaign?.description}</p>
+          </IonCardContent>
+        </IonCard>
+  
+        {missions?.map((mission, index) => (
+          <IonCard
+            key={mission.id}
+            color="primary"
+            onClick={() => handleMissionClick(mission)}
+            className={`mission-card ${index === 0 ? 'first-mission' : ''}`}
+          >
+            <IonCardHeader>
+              <IonCardTitle>{mission.title}</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <p>{mission.description}</p>
+            </IonCardContent>
+          </IonCard>
+        ))}
       </IonContent>
     </IonPage>
   );
