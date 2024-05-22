@@ -58,19 +58,29 @@ const MissionComponent: React.FC = () => {
           <IonTitle>{mission?.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <IonItem>
-          <IonLabel>{mission?.description}</IonLabel>
-        </IonItem>
-        {objectives.map((objective) => (
-          <div key={objective.id} className="ion-text-center ion-padding">
-            <IonCard color={objective.id === '1' ? 'success' : 'primary'} onClick={() => handleObjectiveClick(objective)}>
-              <IonCardHeader>
-                <IonCardTitle color={objective.id === '1' ? 'light' : undefined}>{objective.title}</IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent color={objective.id === '1' ? 'light' : undefined}>{objective.description}</IonCardContent>
-            </IonCard>
-          </div>
+      <IonContent className="ion-padding">
+        <IonCard class="no-shadow">
+          <IonCardHeader>
+            <IonCardTitle>{mission?.title}</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <p>{mission?.description}</p>
+          </IonCardContent>
+        </IonCard>
+  
+        {objectives.map((objective, index) => (
+          <IonCard
+            key={objective.id}
+            color={objective.id === '1' ? 'success' : 'primary'}
+            onClick={() => handleObjectiveClick(objective)}
+            className={`objective-card ${index === 0 ? 'first-objective' : ''}`}
+          >
+            <IonCardHeader>
+              <IonCardTitle color={objective.id === '1' ? 'light' : undefined}>{objective.title}</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent color={objective.id === '1' ? 'light' : undefined}>            <p>{objective.description}</p>
+            </IonCardContent>
+          </IonCard>
         ))}
       </IonContent>
     </IonPage>

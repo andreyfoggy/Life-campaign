@@ -66,7 +66,6 @@ const ObjectiveComponent: React.FC = () => {
       };
 
       await saveFeedback(feedbackData);
-      isComplete = true;
     } catch (error) {
       console.error('Error saving feedback:', error);
       // Show an error message to the user
